@@ -1,0 +1,141 @@
+//npx create-react-app react-typescript-app --template typescript
+//installing command 
+
+//tsconfig.json
+//create component folder 
+
+//create classComponent.tsx
+
+import {Component} from "react"
+
+class ClassComponent extends Component <ClassComponentProps,ClassComponentState>{
+	
+	state : ClassComponentState = {
+		counter: 0,
+		isLoading: false,
+	}	
+
+	render() {
+		return(
+		{this.state.counter}
+		<h1 onClick={() => this.setState({counter:this.state.counter + 1})}>{this.props.title}</h1>
+		<h3>{this.props.subTitle?.toUpperCase() || "no subtitle"}</h3>
+		)//? in the line above is called OPTIONAL CHAINING
+	}
+}
+
+export default ClassComponent
+
+//the props object in a Typescript react component by default is a {}
+//we are trying to pass to ClassComponent a props object like {title:string}
+
+//props are an objet in a React Component
+//let's write an interface for them 
+
+interfaceClassComponentProps {
+	title:string
+	subTitle?:string //optional
+}
+
+//<> --> in Ts this is called a Type Argument
+
+interface ClassComponentState{
+	counter: number
+	isLoading:boolean
+}
+
+//Create FunctionalComponent.tsx
+
+const FunctionalComponent = (props: FunctionalComponentProps) => {
+	return (
+		{counter}
+		<h1 onClick={() => setCounter(counter + 1)}>{props.title}</h1>
+		<h3>{props.subTitle?toUpperCase()}</h3>
+	)
+}
+
+export default FunctionaComponent
+
+//App.tsx
+<FunctionalComponent title="Custom title"/>
+
+interface FunctionalComponentProps {
+	title:string
+	subTitle?: string
+	
+}
+
+import {useState} from "react"
+
+const [counter, setCounter] = useState(0)
+
+const [student, setStudent] = useState<null | {name:string}>(null)
+//the type argument overrides what TS inferes out of your initial value
+//to give a type so student, without it it will only understand that
+//student can only be null, because that's the initial value you gave it
+
+
+
+useEffect(() => {
+	setStudent({name:"Stefano"})
+	
+}, [])
+
+//typescript inferes from the initial value the type of the state variable
+//create FormComponent.tsx
+
+const FormComponent = () => {
+	return (
+		//.... importing form 	
+	)
+}
+
+export default FormComponent 
+
+
+//npm i boostrap@4.6.0 react-bootstrap@1.6.4
+//props interfaces from the package
+//copy form 
+
+//import in App.tsx
+
+//import "boostrap/dist/css/bootstrap.min.css"
+
+//<Button type="submit" variant="secondary">Click Me</Button>
+
+const [firstName, setFirstName] = useState("")
+const [LastName, setLastName] = useState("")
+
+//onChange={(e) => setFirstName(e.target.value)}
+
+//onChange={(e) => setLastName(e.target.value)}
+
+const handleInput = (e : ChangeEvent<HTMLInputEmlement>) =>  {
+	console.log(e.target.value)
+}
+
+//onSubmit={handleSubmit}
+
+const handleSubmit = (e: FormEvent) => alert("submitted")
+
+//npm i react-router-dom
+
+//import useNavigate
+
+const navigate = useNavigate()
+
+//fetchFoodBooks
+
+//for fetching process in a React application 
+//1) make room for your data => create a state variable 
+//2) fetch the data with the fetch() method
+//3)parse the body of your response with the .json() method 
+//4)setting that state variable with the resulting resources
+
+//what changes in TS?
+// because that's perfect as an initial value for an array of anything 
+//but that's also TERRIBLE for TS to try to understand what the content of the 
+//array will be, it will set it as an array of type NEVER
+//to fix this, just provide the shape of one of the emelments to TS
+//and assign the type of your array using the type argument syntax <>
+
