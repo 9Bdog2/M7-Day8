@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import Song from "./Song";
 import { useParams } from "react-router-dom";
+import { ISongs } from "./MainSearch";
 
 const SongSearchResult = () => {
-  const [songs, setSongs] = useState([]);
+  const [songs, setSongs] = useState<ISongs | null>(null);
   const params = useParams();
 
   useEffect(() => {
@@ -15,19 +16,25 @@ const SongSearchResult = () => {
     "https://striveschool-api.herokuapp.com/api/deezer/track/";
 
   const getSongs = async () => {
-    const response = await fetch(baseEndpoint + params.id);
-    const { data } = await response.json();
+    const response = await fetch(baseEndpoint + params.songId);
+    // const { data, error }
+    const song = await response.json();
+    /* as {
+      data?: ISongs;
+      error?: unknown;
+    };
 
-    getSongs(data);
+    if (error) return console.error(error);*/
+
+    setSongs(song);
   };
 
   return (
     <Container>
       <Row>
         <Col>
-          {data.map((songData) => (
-            <Song key={songData.id} payload={songData} />
-          ))}
+          {songs && <Song song={songs} />}
+          {/*songs.map((songData) => ())*/}
         </Col>
       </Row>
     </Container>
